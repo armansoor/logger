@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SimpleLogs — frontend-only logging UI</title>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>SimpleLogs</h1>
+    <div class="controls">
+      <button id="toggle-theme">Dark</button>
+      <button id="download-all">Export .log</button>
+      <button id="export-json">Export JSON</button>
+      <button id="export-csv">Export CSV</button>
+      <button id="export-html">Export HTML Report</button>
+      <button id="copy-filtered">Copy Filtered</button>
+      <input id="gist-token" placeholder="GitHub token for Gist" type="password"/>
+      <button id="save-gist">Save to Gist</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="left">
+      <div class="card">
+        <h2>Quick Log</h2>
+        <div class="form-row">
+          <select id="level-select">
+            <option value="info">info</option>
+            <option value="warn">warn</option>
+            <option value="error">error</option>
+            <option value="debug">debug</option>
+          </select>
+          <input id="tag-input" placeholder="tag (optional)"/>
+        </div>
+        <textarea id="quick-log" placeholder="Type a log and press Enter (Ctrl+Enter to add)"></textarea>
+        <div class="form-row">
+          <button id="add-log">Add Log</button>
+          <button id="clear-input">Clear</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Import / Load</h2>
+        <input id="file-input" type="file" accept=".log,.txt,.json"/>
+        <button id="load-file">Load File</button>
+        <button id="clear-all">Clear All Logs</button>
+      </div>
+
+      <div class="card">
+        <h2>Statistics</h2>
+        <div id="stats-box"></div>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="card">
+        <h2>Log Viewer</h2>
+        <div class="filters">
+          <input id="search" placeholder="Search"/>
+          <select id="filter-level">
+            <option value="">all levels</option>
+            <option value="info">info</option>
+            <option value="warn">warn</option>
+            <option value="error">error</option>
+            <option value="debug">debug</option>
+          </select>
+          <input id="filter-tag" placeholder="filter by tag"/>
+          <button id="clear-filters">Reset</button>
+          <button id="show-pinned">Pinned Only</button>
+          <button id="toggle-autoscroll">Autoscroll: Off</button>
+        </div>
+
+        <div id="log-list" class="log-list" aria-live="polite"></div>
+      </div>
+
+      <div class="card">
+        <h2>Timeline</h2>
+        <canvas id="timeline-chart" height="120"></canvas>
+        <div class="chart-controls">
+          <button id="refresh-chart">Refresh</button>
+          <button id="group-minute">Group: Minute</button>
+          <button id="group-hour">Group: Hour</button>
+          <button id="download-chart">Save Chart PNG</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>SimpleLogs — static demo. No backend. Data lives in your browser.</small>
+  </footer>
+
+  <!-- Keyboard Shortcuts Help Overlay -->
+  <div id="help-overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <h2>Keyboard Shortcuts</h2>
+      <ul>
+        <li><b>Ctrl+Enter</b>: Add log</li>
+        <li><b>Ctrl+K</b>: Focus search</li>
+        <li><b>?</b>: Toggle this help</li>
+      </ul>
+      <button id="close-help">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
